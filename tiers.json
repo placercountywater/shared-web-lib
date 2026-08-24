@@ -22,54 +22,91 @@
     "_classnames": {
       "description": "Tailwind class merger. Split from core so that tier stays Tailwind-free, and kept out of tw so ui and slate can merge classes without inheriting Base UI.",
       "requires": [],
-      "deps": ["clsx", "tailwind-merge"],
+      "deps": [
+        "clsx",
+        "tailwind-merge"
+      ],
       "shadcn": []
     },
     "hooks": {
       "description": "React hooks. No UI-library coupling.",
       "requires": [],
-      "deps": ["usehooks-ts"],
+      "deps": [
+        "usehooks-ts"
+      ],
       "shadcn": []
     },
     "next": {
-      "description": "Next.js helpers, chiefly imgix image loaders.",
-      "requires": [],
-      "deps": ["next"],
+      "description": "Next.js helpers: imgix image loaders, href resolution, and the routing-only BlockLink.",
+      "requires": [
+        "core"
+      ],
+      "deps": [
+        "next"
+      ],
       "shadcn": []
     },
     "date-fns": {
       "description": "Date and timezone helpers.",
       "requires": [],
-      "deps": ["@date-fns/tz"],
+      "deps": [
+        "@date-fns/tz"
+      ],
       "shadcn": []
     },
     "tw": {
       "description": "Tailwind/Base UI primitives and stylesheets.",
-      "requires": ["_classnames", "hooks"],
-      "deps": ["@base-ui/react", "next", "usehooks-ts"],
+      "requires": [
+        "_classnames",
+        "hooks"
+      ],
+      "deps": [
+        "@base-ui/react",
+        "next",
+        "usehooks-ts"
+      ],
       "shadcn": []
     },
     "ui": {
       "description": "shadcn-based components. Renders against the app's own shadcn copies.",
-      "requires": ["_classnames", "next"],
+      "requires": [
+        "_classnames",
+        "next"
+      ],
       "deps": [],
-      "shadcn": ["button", "button-group", "dialog"]
+      "shadcn": [
+        "button",
+        "button-group",
+        "dialog"
+      ]
     },
     "mui": {
       "description": "MUI components. Mutually exclusive with tw/ui in practice.",
-      "requires": ["core"],
-      "deps": ["@mui/material", "clsx", "next"],
+      "requires": [
+        "core"
+      ],
+      "deps": [
+        "@mui/material",
+        "clsx",
+        "next"
+      ],
       "shadcn": []
     },
     "mui-pages": {
       "description": "Pages Router variants of the mui tier.",
-      "requires": ["mui"],
+      "requires": [
+        "mui"
+      ],
       "deps": [],
       "shadcn": []
     },
     "slate": {
       "description": "Slate rich-text editor. Pulls MUI in via its toolbar.",
-      "requires": ["_classnames", "mui", "types"],
+      "requires": [
+        "_classnames",
+        "mui",
+        "types"
+      ],
       "deps": [
         "@mui/icons-material",
         "@mui/material",
@@ -82,20 +119,38 @@
     },
     "types": {
       "description": "Ambient declarations. Circular with slate by design.",
-      "requires": ["slate"],
-      "deps": ["slate", "slate-history", "slate-react"],
+      "requires": [
+        "slate"
+      ],
+      "deps": [
+        "slate",
+        "slate-history",
+        "slate-react"
+      ],
       "shadcn": []
     },
     "aws": {
       "description": "S3 helpers. Server-only.",
-      "requires": ["core", "date-fns"],
-      "deps": ["@aws-sdk/client-s3", "date-fns", "filenamify"],
+      "requires": [
+        "core",
+        "date-fns"
+      ],
+      "deps": [
+        "@aws-sdk/client-s3",
+        "date-fns",
+        "filenamify"
+      ],
       "shadcn": []
     },
     "blob": {
       "description": "Vercel Blob helpers. Server-only.",
-      "requires": ["date-fns"],
-      "deps": ["@vercel/blob", "date-fns"],
+      "requires": [
+        "date-fns"
+      ],
+      "deps": [
+        "@vercel/blob",
+        "date-fns"
+      ],
       "shadcn": []
     }
   }

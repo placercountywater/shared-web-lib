@@ -1,3 +1,5 @@
+export {default as BlockLink} from './BlockLink'
+export type {BlockLinkProps} from './BlockLink'
 export {default as awsImgixLoader} from './awsImgixLoader'
 export {default as imgixUrlLoader} from './imgixUrlLoader'
 export {default as imgixPreloadUrl} from './imgixPreloadUrl'

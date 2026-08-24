@@ -11,6 +11,12 @@ export {
 export {default as fileExtension} from './fileExtension'
 export {default as getInitials} from './getInitials'
 export {default as groupBy} from './groupBy'
+export {
+  default as hrefKind,
+  isExternalHref,
+  externalLinkProps
+} from './hrefKind'
+export type {HrefKind} from './hrefKind'
 export {default as isDev} from './isDev'
 export {default as isImgixInputMimeType} from './isImgixInputMimeType'
 export {default as paramToStr} from './paramToStr'

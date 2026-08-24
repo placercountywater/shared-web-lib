@@ -12,7 +12,7 @@ type BlockLinkProps = Omit<ComponentProps<'a'>, 'href'> & {href: string}
  * Routing only: it picks the element the href needs and contributes nothing to
  * the look. That split is the point — styling a link is a separate concern from
  * deciding how it navigates, and the two want opposite things here. An
- * underline and a text colour belong on a word inside a sentence, and read as a
+ * underline and a text color belong on a word inside a sentence, and read as a
  * mistake on a link wrapping an entire card.
  *
  * The one exception is that underline, which it removes. That is less styling
@@ -31,7 +31,7 @@ type BlockLinkProps = Omit<ComponentProps<'a'>, 'href'> & {href: string}
  *
  * For a link inside prose, use the `tw` tier's Link, which styles an anchor and
  * composes with next/link through its `render` prop. An app that wants its own
- * brand colour on prose links should wrap that once rather than reach for this.
+ * brand color on prose links should wrap that once rather than reach for this.
  *
  * The accessible name comes from the content inside, which is why a decorative
  * image within one takes `alt=""` — the visible text is already the name, and a

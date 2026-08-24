@@ -29,9 +29,9 @@ type TextLinkProps = Omit<ComponentProps<typeof Link>, 'render'> & {
  * `target` and `rel` remain overridable for the case the classification gets
  * wrong.
  *
- * What it deliberately does not decide is colour. Link inherits its own and
+ * What it deliberately does not decide is color. Link inherits its own and
  * distinguishes itself by the underline, so an app that wants prose links in a
- * brand colour wraps this once:
+ * brand color wraps this once:
  *
  * ```tsx
  * export default function AppLink({className, ...rest}: TextLinkProps) {

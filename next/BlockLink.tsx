@@ -5,31 +5,35 @@ import hrefKind, {externalLinkProps} from '../core/hrefKind'
 type BlockLinkProps = Omit<ComponentProps<'a'>, 'href'> & {href: string}
 
 /**
- * A link wrapping a block of content — a tile, a card, a map thumbnail, a list
- * row.
+ * A link wrapping a block of content — a tile, a card, an image thumbnail, a
+ * list row.
  *
- * Routing only. It picks the right element for the href and contributes nothing
- * to the look, which is the whole difference between this and a prose link: a
- * prose link brings an underline, a decoration colour and a brand text colour,
- * and every one of those reads as wrong on a link wrapping a whole card. The
- * caller styles the block; this decides how it navigates.
+ * Routing only: it picks the element the href needs and contributes nothing to
+ * the look. That split is the point. Styling a link is a separate concern from
+ * deciding how it navigates, and the two want opposite things here — an
+ * underline and a text colour belong on a word inside a sentence, and read as a
+ * mistake on a link wrapping an entire card.
  *
- * Compose it with the `tw` tier's Link when you want both, rather than
- * reaching for one and overriding it:
+ * So the caller styles the block:
  *
  * ```tsx
- * <BlockLink href={href} className="group block h-full">…</BlockLink>
+ * <BlockLink href={href} className="block rounded-lg hover:shadow-md">
+ *   <Card>…</Card>
+ * </BlockLink>
  * ```
  *
- * The accessible name comes from the content inside. That is why a decorative
- * image within one takes `alt=""` — the visible text is the name, and a
+ * For a link inside prose, use the `tw` tier's Link, which styles an anchor and
+ * composes with next/link through its `render` prop. An app that wants its own
+ * brand colour on prose links should wrap that once rather than reach for this.
+ *
+ * The accessible name comes from the content inside, which is why a decorative
+ * image within one takes `alt=""` — the visible text is already the name, and a
  * described image is announced twice.
  *
- * It exists because every consuming app had written the same conditional, or
- * skipped it: two spelled out `isExternalHref(href) ? <a target="_blank"> :
- * <NextLink>` by hand, one hardcoded target and rel with no branch at all so an
- * internal href opened a pointless tab, and one app had 93 files with
- * `target="_blank"` written in place.
+ * It is here because the alternative is every app writing the same conditional,
+ * and getting it inconsistently right: spelling the ternary out by hand,
+ * hardcoding target and rel with no branch so an internal href opens a
+ * pointless tab, or writing target="_blank" in place across dozens of files.
  */
 export default function BlockLink({href, children, ...rest}: BlockLinkProps) {
   const kind = hrefKind(href)
@@ -46,7 +50,11 @@ export default function BlockLink({href, children, ...rest}: BlockLinkProps) {
   }
 
   return (
-    <a href={href} {...(kind === 'external' ? externalLinkProps : {})} {...rest}>
+    <a
+      href={href}
+      {...(kind === 'external' ? externalLinkProps : {})}
+      {...rest}
+    >
       {children}
     </a>
   )

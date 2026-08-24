@@ -55,8 +55,9 @@
       "shadcn": []
     },
     "tw": {
-      "description": "Tailwind/Base UI primitives and stylesheets.",
+      "description": "Tailwind/Base UI primitives, stylesheets, and the routed prose link.",
       "requires": [
+        "core",
         "_classnames",
         "hooks"
       ],

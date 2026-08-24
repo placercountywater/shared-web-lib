@@ -1,3 +1,5 @@
+export {default as TextLink} from './TextLink'
+export type {TextLinkProps} from './TextLink'
 export {default as Paragraph, P, type ParagraphProps} from './Paragraph'
 export {default as Link, A, type LinkProps} from './Link'
 export {default as Wow} from './Wow'

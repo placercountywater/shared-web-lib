@@ -19,11 +19,11 @@
  * a card, a list row — ask the same question as a prose link without the prose
  * styling coming with the answer.
  *
- * It is in this library because every app was answering it separately, and
- * differently: three of them tested `startsWith('http')`, which treats a
- * `mailto:` as internal and hands it to the router. Two definitions of
- * "external" mean two answers to "does this need target and rel", and that is
- * the half worth getting right once.
+ * It is in this library because apps were answering it separately and
+ * inconsistently — a `startsWith('http')` test, for instance, calls a `mailto:`
+ * internal and hands it to the router. Two definitions of "external" mean two
+ * answers to "does this need target and rel", and that half is a security
+ * question rather than a cosmetic one, so it is worth having once.
  *
  * Protocol-relative `//host/path` counts as external. It is rare in authored
  * content but it is unambiguously another origin.

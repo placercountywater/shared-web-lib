@@ -39,7 +39,8 @@
     "next": {
       "description": "Next.js helpers: imgix image loaders, href resolution, and the routing-only BlockLink.",
       "requires": [
-        "core"
+        "core",
+        "_classnames"
       ],
       "deps": [
         "next"

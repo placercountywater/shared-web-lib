@@ -1,5 +1,6 @@
 import type {ComponentProps} from 'react'
 import NextLink from 'next/link'
+import {cn} from '../_classnames'
 import hrefKind, {externalLinkProps} from '../core/hrefKind'
 
 type BlockLinkProps = Omit<ComponentProps<'a'>, 'href'> & {href: string}
@@ -9,10 +10,16 @@ type BlockLinkProps = Omit<ComponentProps<'a'>, 'href'> & {href: string}
  * list row.
  *
  * Routing only: it picks the element the href needs and contributes nothing to
- * the look. That split is the point. Styling a link is a separate concern from
- * deciding how it navigates, and the two want opposite things here — an
+ * the look. That split is the point — styling a link is a separate concern from
+ * deciding how it navigates, and the two want opposite things here. An
  * underline and a text colour belong on a word inside a sentence, and read as a
  * mistake on a link wrapping an entire card.
+ *
+ * The one exception is that underline, which it removes. That is less styling
+ * than undoing a user-agent default that is wrong for every use of this
+ * component: without it a bare anchor arrives underlined across the whole
+ * block, and each caller has to remember to suppress it. Pass an `underline`
+ * class to put it back.
  *
  * So the caller styles the block:
  *
@@ -35,15 +42,22 @@ type BlockLinkProps = Omit<ComponentProps<'a'>, 'href'> & {href: string}
  * hardcoding target and rel with no branch so an internal href opens a
  * pointless tab, or writing target="_blank" in place across dozens of files.
  */
-export default function BlockLink({href, children, ...rest}: BlockLinkProps) {
+export default function BlockLink({
+  href,
+  className,
+  children,
+  ...rest
+}: BlockLinkProps) {
   const kind = hrefKind(href)
+  // Through cn, so a caller's own decoration class still wins.
+  const classes = cn('no-underline', className)
 
   // Client-side routing for our own pages only. next/link cannot dial a tel:,
   // and routing to a fragment on the current page is a navigation where the
   // browser only needed to scroll.
   if (kind === 'internal') {
     return (
-      <NextLink href={href} {...rest}>
+      <NextLink href={href} className={classes} {...rest}>
         {children}
       </NextLink>
     )
@@ -52,6 +66,7 @@ export default function BlockLink({href, children, ...rest}: BlockLinkProps) {
   return (
     <a
       href={href}
+      className={classes}
       {...(kind === 'external' ? externalLinkProps : {})}
       {...rest}
     >

@@ -46,18 +46,28 @@ export default function BlockLink({
   href,
   className,
   children,
+  download,
   ...rest
 }: BlockLinkProps) {
   const kind = hrefKind(href)
   // Through cn, so a caller's own decoration class still wins.
   const classes = cn('no-underline', className)
 
+  // An attachment -- a Blob or imgix `?dl=`, anything answered with
+  // Content-Disposition -- is downloaded by the browser without navigating. A
+  // new tab would open and immediately close itself, so an attachment gets no
+  // target even when the href is off-site.
+  //
+  // hrefKind cannot see this on its own: an attachment URL is just https like
+  // any other. `download` is the caller's way of saying which it is.
+  const isAttachment = download !== undefined && download !== false
+
   // Client-side routing for our own pages only. next/link cannot dial a tel:,
   // and routing to a fragment on the current page is a navigation where the
   // browser only needed to scroll.
   if (kind === 'internal') {
     return (
-      <NextLink href={href} className={classes} {...rest}>
+      <NextLink href={href} className={classes} download={download} {...rest}>
         {children}
       </NextLink>
     )
@@ -67,7 +77,8 @@ export default function BlockLink({
     <a
       href={href}
       className={classes}
-      {...(kind === 'external' ? externalLinkProps : {})}
+      download={download}
+      {...(kind === 'external' && !isAttachment ? externalLinkProps : {})}
       {...rest}
     >
       {children}

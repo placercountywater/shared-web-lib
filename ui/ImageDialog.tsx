@@ -323,7 +323,7 @@ export default function ImageDialog({
                 '[&_img]:mx-auto [&_img]:max-h-[94dvh] [&_img]:w-auto [&_img]:max-w-full [&_img]:object-contain',
                 showToolbar && 'cursor-default',
                 closeOnDoubleTap && !showToolbar && 'cursor-pointer',
-                size === 'fit' && '[&_img]:max-h-[100dvh]'
+                size === 'fit' && '[&_img]:max-h-dvh'
               )}
             >
               {children}

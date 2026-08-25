@@ -8,6 +8,7 @@ import clsx from 'clsx'
 import {useRouter} from 'next/router'
 import NextLink, {type LinkProps as NextLinkProps} from 'next/link'
 import MuiLink, {type LinkProps as MuiLinkProps} from '@mui/material/Link'
+import hrefKind, {externalLinkProps} from '../../core/hrefKind'
 
 export interface NextLinkComposedProps
   extends
@@ -80,20 +81,55 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
       rel
     }
 
-    const isExternal =
-      typeof href === 'string' &&
-      (href.startsWith('http://') ||
-        href.startsWith('https://') ||
-        href.startsWith('mailto:'))
+    // core/hrefKind classifies the four kinds one way for every app, so this
+    // does not re-derive them per component. It matters here because the three
+    // non-internal kinds each need something different:
+    //
+    // - external opens a new tab, with noopener so the new document cannot
+    //   reach back through window.opener
+    // - mailto: and tel: are handed to the OS. next/link cannot dial a phone
+    //   number, and a new tab beside the mail client is a blank tab -- which is
+    //   what this component used to produce, since it counted mailto: as
+    //   external and gave it target="_blank"
+    // - a bare #id is a scroll on the page you are already on, not a route
+    //   change, so it must not go through the router either
+    //
+    // Narrowed rather than derived so that href is a string inside the branches
+    // below. It may also be a UrlObject, which only the router accepts.
+    const strHref = typeof href === 'string' ? href : null
+    const kind = strHref ? hrefKind(strHref) : 'internal'
 
-    if (isExternal) {
+    if (strHref && kind === 'external') {
       return (
         <MuiLink
           className={className}
-          href={href}
+          href={strHref}
           ref={ref}
-          target={target || '_blank'}
-          rel={rel || 'noopener noreferrer'}
+          target={target ?? externalLinkProps.target}
+          rel={rel ?? externalLinkProps.rel}
+          {...other}
+        />
+      )
+    }
+
+    // A plain anchor: no router, and no target or rel unless the caller asked.
+    if (strHref && (kind === 'protocol' || kind === 'fragment')) {
+      return noLinkStyle ? (
+        <a
+          className={className}
+          href={strHref}
+          ref={ref}
+          target={target}
+          rel={rel}
+          {...(other as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
+        />
+      ) : (
+        <MuiLink
+          className={className}
+          href={strHref}
+          ref={ref}
+          target={target}
+          rel={rel}
           {...other}
         />
       )

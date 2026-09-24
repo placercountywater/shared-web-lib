@@ -277,7 +277,7 @@ function main() {
     for (const component of tiers[tier].shadcn) {
       if (!existsSync(path.join(SHADCN_DIR, `${component}.tsx`))) {
         fail(
-          `Tier "${tier}" renders against shadcn "${component}", missing from src/components/ui/. Try: yarn shadcn add ${component}`
+          `Tier "${tier}" renders against shadcn "${component}", missing from src/components/ui/. Try: npx shadcn add ${component}`
         )
       }
     }

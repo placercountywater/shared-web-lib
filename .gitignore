@@ -1,21 +1,21 @@
 # Node.js dependencies
 node_modules/
 
-# yarn, see https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored for more info
+# this project standardizes on npm; no other package manager's files belong here
 .pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+.yarn/
 
-# Deliberately untracked. This repo is consumed as a git submodule of source
-# files -- nothing installs it, so a committed lockfile pins nothing a consumer
-# ever resolves. node_modules here exists only for `yarn type-check` and editor
-# IntelliSense. Committing it only fed GitHub a manifest to raise advisories
-# against for versions no app ever ships.
+# Deliberately untracked, whichever package manager wrote it. This repo is
+# consumed as a git submodule of source files -- nothing installs it, so a
+# committed lockfile pins nothing a consumer ever resolves. node_modules here
+# exists only for `npm run type-check` and editor IntelliSense. Committing one
+# only fed GitHub a manifest to raise advisories against for versions no app
+# ever ships.
+package-lock.json
 yarn.lock
+pnpm-lock.yaml
+bun.lock
+bun.lockb
 
 # TypeScript cache/output
 dist/

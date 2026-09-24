@@ -1,9 +1,15 @@
 {
   "private": true,
   "scripts": {
+    "preinstall": "npx --yes --loglevel=error only-allow npm",
     "format": "prettier --config .prettierrc --write './**/*.{ts,tsx,css}'",
     "type-check": "tsc --noEmit -p .",
-    "type-check:watch": "yarn type-check -- --watch"
+    "type-check:watch": "npm run type-check -- --watch",
+    "clean": "npx --yes rimraf node_modules tsconfig.tsbuildinfo",
+    "reinstall": "npm run clean && npm install",
+    "deps:check": "npm outdated || true",
+    "deps:upgrade": "npx --yes npm-check-updates --interactive --format group --target minor",
+    "deps:upgrade:major": "npx --yes npm-check-updates --interactive --format group --target latest"
   },
   "devDependencies": {
     "@mui/icons-material": "^9.2.0",
@@ -38,6 +44,5 @@
     "next": "^16",
     "react": "^19",
     "react-dom": "^19"
-  },
-  "packageManager": "yarn@4.18.0"
+  }
 }

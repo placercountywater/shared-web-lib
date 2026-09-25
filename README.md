@@ -179,19 +179,19 @@ the message rather than in the subject line:
 ```text
 feat: add a downloadIcon prop to ImageDialog
 
-Requested-by: Nicole Reid <nreid@pcwa.net>
+Requested-by: John Doe <jdoe@example.com>
 ```
 
 Trailers are `Key: value` lines in a block at the very end, separated from the
 body by one blank line, with no blank lines between them. Git parses them
-natively, so unlike an `(N. Reid)` suffix they are queryable:
+natively, so unlike a `(J. Doe)` suffix they are queryable:
 
 ```shell
 # who asked for what
 git log --format='%h %s%n    %(trailers:key=Requested-by,valueonly)'
 
 # every change a given person requested
-git log --grep='Requested-by:.*Reid'
+git log --grep='Requested-by:.*Doe'
 ```
 
 Which trailer to use:

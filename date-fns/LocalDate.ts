@@ -44,6 +44,31 @@ export type LocalDateProps =
     ]
 
 /**
+ * A date string with no offset ("2026-09-28", "2026-09-28T09:30",
+ * "2026-09-28 09:30:15.250"): wall-clock time with no zone of its own.
+ */
+const ZONELESS_DATE =
+  /^(\d{4})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{1,3}))?)?)?$/
+
+/** Zoneless string -> [year, monthIndex, date, h, m, s, ms], else null. */
+const zonelessParts = (str: string) => {
+  const match = ZONELESS_DATE.exec(str)
+  if (!match) {
+    return null
+  }
+  const [, year, month, date, hours, minutes, seconds, ms] = match
+  return [
+    Number(year),
+    Number(month) - 1,
+    Number(date),
+    Number(hours ?? 0),
+    Number(minutes ?? 0),
+    Number(seconds ?? 0),
+    Number((ms ?? '0').padEnd(3, '0'))
+  ] as const
+}
+
+/**
  * LocalDate class extends TZDate and sets the timezone to locally defined timezone.
  *
  * This class allows the creation of a date object in the locale timezone
@@ -52,6 +77,10 @@ export type LocalDateProps =
  * - Date object
  * - Timestamp
  * - Year, month, and optionally other components like day, time, etc.
+ *
+ * Wall-clock input (year/month/... parts, or a date string without an
+ * offset) is read as local time in LOCAL_TIMEZONE, never in the machine's
+ * zone, so the result is the same in a browser and on a UTC server.
  */
 export default class LocalDate extends TZDate {
   /**
@@ -59,7 +88,9 @@ export default class LocalDate extends TZDate {
    *
    * @param {...LocalDateProps} args - The date arguments, which can be any valid permutation as described by the LocalDateProps type.
    * If no arguments are provided, the current date is used.
-   * If a date string or Date object is provided, it is used as the date.
+   * If a date string or Date object is provided, it is used as the date. A
+   * string without an offset ("2026-09-28", "2026-09-28T09:30") is local
+   * time; one with "Z" or an offset is that exact moment.
    * If a timestamp is provided, it is treated as milliseconds since the Unix Epoch.
    * If year and month are provided, additional time components (day, hours, etc.) can be optionally provided.
    *
@@ -70,13 +101,16 @@ export default class LocalDate extends TZDate {
     if (args.length === 0) {
       super(new Date(), LOCAL_TIMEZONE)
     } else if (typeof args[0] === 'string') {
-      // Normalize date-only strings so they default to local midnight
-      const str = args[0]
-      const normalized = /^\d{4}-\d{2}-\d{2}$/.test(str)
-        ? `${str}T00:00:00`
-        : str
-      // Handle case when the first argument is a date string
-      super(normalized, LOCAL_TIMEZONE)
+      const parts = zonelessParts(args[0])
+      if (parts) {
+        // Wall-clock time: build it in the local zone. (Passing the string
+        // to TZDate would read it in the machine's zone first.)
+        super(...parts, LOCAL_TIMEZONE)
+      } else {
+        // Has "Z" or an offset (or another format Date can parse): an
+        // exact moment, shown in the local zone.
+        super(args[0], LOCAL_TIMEZONE)
+      }
     } else if (args[0] instanceof Date) {
       // Handle case when the first argument is a Date object
       super(args[0], LOCAL_TIMEZONE)
@@ -95,8 +129,16 @@ export default class LocalDate extends TZDate {
         milliseconds = 0 // Default to 0 if not provided
       ] = args as [number, number, number?, number?, number?, number?, number?]
 
+      // Built in the local zone directly: new Date(year, month, ...) would
+      // read the parts in the machine's zone (UTC on a server).
       super(
-        new Date(year, month, date, hours, minutes, seconds, milliseconds),
+        year,
+        month,
+        date,
+        hours,
+        minutes,
+        seconds,
+        milliseconds,
         LOCAL_TIMEZONE
       )
     }

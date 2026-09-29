@@ -5,6 +5,7 @@
     "format": "prettier --config .prettierrc --write './**/*.{ts,tsx,css}'",
     "type-check": "tsc --noEmit -p .",
     "type-check:watch": "npm run type-check -- --watch",
+    "test": "TZ=UTC npx --yes tsx --test 'date-fns/*.test.ts' && TZ=America/Los_Angeles npx --yes tsx --test 'date-fns/*.test.ts'",
     "clean": "npx --yes rimraf node_modules tsconfig.tsbuildinfo",
     "reinstall": "npm run clean && npm install",
     "deps:check": "npm outdated || true",

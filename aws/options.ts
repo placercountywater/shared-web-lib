@@ -1,7 +1,7 @@
-const awsRegion = process.env.AWS_REGION || ''
-const accessKeyId = process.env.AWS_ACCESS_KEY_ID || ''
-const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY || ''
-const bucketName = process.env.AWS_BUCKET || ''
+const awsRegion = process.env.DO_SPACES_MEDIA_REGION || ''
+const accessKeyId = process.env.DO_SPACES_MEDIA_KEY || ''
+const secretAccessKey = process.env.DO_SPACES_MEDIA_SECRET || ''
+const bucketName = process.env.DO_SPACES_MEDIA_BUCKET || ''
 const endpoint = `https://${awsRegion}.digitaloceanspaces.com`
 const originEndpoint = `https://${bucketName}.${awsRegion}.digitaloceanspaces.com`
 const cdnEndpoint = `https://${bucketName}.${awsRegion}.cdn.digitaloceanspaces.com`

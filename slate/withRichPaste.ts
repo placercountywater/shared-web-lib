@@ -28,6 +28,24 @@ export interface RichPasteOptions {
   stripLinks?: boolean
 }
 
+/*  Browsers serialize a selection inside a single block as <span style="font-weight: 600"> rather than <strong>, so a
+  one-line copy loses its formatting unless inline styles are read too. Google Docs marks formatting the same way.
+*/
+function applyStyleMarks(style: CSSStyleDeclaration, marks: Marks) {
+  const {fontWeight, fontStyle} = style
+  if (fontWeight) {
+    const weight = fontWeight === 'bold' || fontWeight === 'bolder' ? 700 : Number(fontWeight)
+    if (weight >= 600) marks.bold = true
+    else if (fontWeight === 'normal' || weight < 600) delete marks.bold
+  }
+  if (fontStyle === 'italic' || fontStyle === 'oblique') marks.italic = true
+  else if (fontStyle === 'normal') delete marks.italic
+
+  const decoration = style.textDecorationLine || style.textDecoration
+  if (decoration.includes('underline')) marks.underline = true
+  if (decoration.includes('line-through')) marks.strikethrough = true
+}
+
 function deserializeNode(node: Node, marks: Marks = {}, options: RichPasteOptions = {}): Descendant[] {
   if (node.nodeType === Node.TEXT_NODE) {
     const text = node.textContent || ''
@@ -53,6 +71,7 @@ function deserializeNode(node: Node, marks: Marks = {}, options: RichPasteOption
   } else if (markKey) {
     currentMarks[markKey] = true
   }
+  applyStyleMarks(el.style, currentMarks)
 
   const children = Array.from(el.childNodes).flatMap(child =>
     deserializeNode(child, currentMarks, options)

@@ -1,0 +1,30 @@
+# Spelling dictionary for shared-web-lib.
+# One word per line; '#' starts a comment.
+# The VS Code cSpell 'add to dictionary' quick-fix appends here.
+
+animista
+behaviour
+bkvie
+bmfpfa
+bpcwa
+bpcwas
+bpge
+ETIMEOUT
+EXIF
+filenamify
+inlines
+Mfpfa
+mista
+navigations
+noopener
+noreferrer
+pcwa
+PCWA's
+pjpeg
+pjpg
+Prfx
+tabler
+undirectivized
+unoptimised
+usehooks
+valueonly

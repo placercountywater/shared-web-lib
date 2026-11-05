@@ -37,6 +37,7 @@ declaration for a tier that is very much in use.
 | `date-fns`         | Date and timezone helpers.                                    |
 | `tw`               | Tailwind / Base UI primitives and stylesheets.                |
 | `ui`               | shadcn-based components. See note below.                      |
+| `legal`            | Agency legal pages, shared verbatim. Renders with `tw`.       |
 | `mui`, `mui-pages` | MUI components. App Router and Pages Router variants.         |
 | `slate`            | Slate rich-text editor. Pulls MUI in via its toolbar.         |
 | `aws`              | S3 helpers. Reads AWS credentials from env — server-side use. |

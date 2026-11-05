@@ -82,6 +82,15 @@
         "dialog"
       ]
     },
+    "legal": {
+      "description": "Agency legal pages. Approved copy shared verbatim across sites, with what differs per site passed in.",
+      "requires": [
+        "_classnames",
+        "tw"
+      ],
+      "deps": [],
+      "shadcn": []
+    },
     "mui": {
       "description": "MUI components. Mutually exclusive with tw/ui in practice.",
       "requires": [

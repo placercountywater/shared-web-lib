@@ -342,7 +342,10 @@ export default function PrivacyPolicy({
           </ul>
           <Paragraph>
             To exercise these rights, contact us using the methods on our{' '}
-            <TextLink className={linkClassName} href={contact.href}>
+            <TextLink
+              className={cn('whitespace-nowrap', linkClassName)}
+              href={contact.href}
+            >
               Contact Us
             </TextLink>{' '}
             page. We will verify your request consistent with applicable law
@@ -415,7 +418,10 @@ export default function PrivacyPolicy({
           <Paragraph>
             If you have questions about this Privacy Policy or wish to exercise
             your privacy rights, please visit our{' '}
-            <TextLink className={linkClassName} href={contact.href}>
+            <TextLink
+              className={cn('whitespace-nowrap', linkClassName)}
+              href={contact.href}
+            >
               Contact Us
             </TextLink>{' '}
             page or reach out using one of the methods below.

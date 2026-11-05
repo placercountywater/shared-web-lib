@@ -180,8 +180,11 @@ export default function PrivacyPolicy({
             </li>
             <li>Respond to inquiries, service requests, and feedback.</li>
             <li>
-              Send notices or updates you opt in to receive (e.g., newsletters
-              and SMS text messages).
+              Send notices or updates you opt in to receive (e.g.,
+              {includeSms
+                ? ' newsletters and SMS text messages'
+                : ' newsletters'}
+              ).
             </li>
             <li>
               Detect, prevent, and address technical issues and security

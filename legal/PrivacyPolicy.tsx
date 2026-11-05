@@ -30,6 +30,11 @@ type PrivacyPolicyProps = {
   /** The SMS/10DLC section. Only true for a site that collects phone numbers
       and texts them — pcwa.net does, the satellite sites do not. */
   includeSms?: boolean
+  /** Whether the site has any form that collects personal information. False
+      drops what §2 says about forms: several agency sites are brochure sites
+      with no input on them at all, and a policy that overstates what it
+      collects is as inaccurate as one that understates it. */
+  collectsFormData?: boolean
   /** Prose link color, e.g. "text-primary". TextLink inherits its color by
       design, so without this every link here is body-text color. */
   linkClassName?: string
@@ -77,6 +82,7 @@ export default function PrivacyPolicy({
   agency = DEFAULT_AGENCY,
   contact: contactProp,
   includeSms = false,
+  collectsFormData = true,
   linkClassName,
   className
 }: PrivacyPolicyProps) {
@@ -112,18 +118,20 @@ export default function PrivacyPolicy({
         <>
           <Paragraph>We collect information in the following ways:</Paragraph>
           <ul className="mb-4 list-disc space-y-3 pl-5">
-            <li>
-              <span className="font-medium">
-                Information you provide directly
-              </span>
-              <p className="mt-1 text-sm leading-relaxed">
-                If you complete a form on our site—such as a contact form,
-                service request, program enrollment, or newsletter sign-up—we
-                collect the information you submit (for example: name, email
-                address, phone number, service address, account number, and the
-                content of your message).
-              </p>
-            </li>
+            {collectsFormData ? (
+              <li>
+                <span className="font-medium">
+                  Information you provide directly
+                </span>
+                <p className="mt-1 text-sm leading-relaxed">
+                  If you complete a form on our site—such as a contact form,
+                  service request, program enrollment, or newsletter sign-up—we
+                  collect the information you submit (for example: name, email
+                  address, phone number, service address, account number, and
+                  the content of your message).
+                </p>
+              </li>
+            ) : null}
             <li>
               <span className="font-medium">
                 Information collected automatically
@@ -154,15 +162,24 @@ export default function PrivacyPolicy({
               </p>
             </li>
           </ul>
-          <Paragraph>
-            We do not collect sensitive personal information via the public
-            website unless you choose to provide it in a form field or as
-            required by law for a service.
-          </Paragraph>
+          {collectsFormData ? (
+            <Paragraph>
+              We do not collect sensitive personal information via the public
+              website unless you choose to provide it in a form field or as
+              required by law for a service.
+            </Paragraph>
+          ) : (
+            <Paragraph>
+              We do not collect sensitive personal information via this website.
+            </Paragraph>
+          )}
           <Paragraph>
             We do not collect information from third parties. All information we
-            receive is provided directly by visitors through forms or
-            automatically through basic analytics tools.
+            receive is
+            {collectsFormData
+              ? ' provided directly by visitors through forms or automatically through basic analytics tools'
+              : ' collected automatically through basic analytics tools'}
+            .
           </Paragraph>
         </>
       )

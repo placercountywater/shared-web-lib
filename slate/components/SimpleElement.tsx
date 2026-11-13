@@ -1,32 +1,17 @@
-import {Typography} from '@mui/material'
-import type {CustomRenderElementProps} from '../../slate/types'
+import type {CustomRenderElementProps} from '../types'
 
 /**
- * A `SimpleElement` component that renders a Slate.js element using Material-UI's `Typography` component.
- *
- * This component provides a straightforward rendering of Slate.js elements, wrapping the content in a `div` element via MUI's `Typography` component.
- *
- * @param {CustomRenderElementProps} props - The props for rendering the element.
- * @param {React.ReactNode} props.children - The content to be rendered inside the element.
- * @param {object} props.attributes - The attributes provided by Slate.js for the element.
- * @param {object} props.element - The element object containing type and other relevant information.
- * @param {object} [props.rest] - Additional props to customize the styling or behavior of the `Typography` component.
- * @returns {JSX.Element} The rendered `Typography` component with the content wrapped in a `div` element.
- *
- * @example
- * <SimpleElement attributes={attributes} element={element}>
- *   Simple content
- * </SimpleElement>
+ * Renders any Slate element as a plain `div`, ignoring its type. For
+ * single-line fields (titles, captions) where block structure is meaningless.
  */
 export default function SimpleElement({
   attributes,
   children,
-  element,
-  ...rest
+  className
 }: CustomRenderElementProps) {
   return (
-    <Typography variant="inherit" component="div" {...rest} {...attributes}>
+    <div className={className} {...attributes}>
       {children}
-    </Typography>
+    </div>
   )
 }

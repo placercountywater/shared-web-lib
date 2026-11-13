@@ -1,5 +1,4 @@
 import React from 'react'
-import {type TypographyProps} from '@mui/material'
 import {type BaseText, type BaseElement} from 'slate'
 import {type RenderElementProps, type RenderLeafProps} from 'slate-react'
 
@@ -36,8 +35,10 @@ export interface CustomText extends BaseText {
 
 export type CustomRenderLeafProps = RenderLeafProps & {
   leaf: CustomText
-} & TypographyProps
+  className?: string
+}
 
 export type CustomRenderElementProps = RenderElementProps & {
   element: CustomElement
-} & TypographyProps
+  className?: string
+}

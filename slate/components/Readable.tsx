@@ -3,7 +3,6 @@
 import {useCallback, useEffect, useMemo} from 'react'
 import {createEditor, type Descendant, Transforms, Node} from 'slate'
 import {Slate, Editable, withReact} from 'slate-react'
-import {Box} from '@mui/material'
 import SimpleElement from './SimpleElement'
 import SimpleLeaf from './SimpleLeaf'
 import slateValueToPlainText from '../slateValueToPlainText'
@@ -21,12 +20,6 @@ const defaultDefaultValue: Descendant[] = [
     children: [{text: ''}]
   }
 ]
-
-// const muiGridCellStyles: SxProps<Theme> = {
-//   whiteSpace: 'nowrap',
-//   overflow: 'hidden',
-//   textOverflow: 'ellipsis'
-// } as const
 
 export default function Readable({
   data = defaultDefaultValue,
@@ -77,9 +70,9 @@ export default function Readable({
   const htmlTitle = slateValueToPlainText(data)
 
   return (
-    <Box>
+    <div>
       <Slate editor={editor} initialValue={data}>
-        <Box>
+        <div>
           <Editable
             {...(showHtmlTitle && {title: htmlTitle})}
             renderElement={renderElement}
@@ -89,8 +82,8 @@ export default function Readable({
             tabIndex={tabIndex}
             {...props}
           />
-        </Box>
+        </div>
       </Slate>
-    </Box>
+    </div>
   )
 }

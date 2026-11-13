@@ -1,8 +1,9 @@
 import React from 'react'
 import {Descendant, Text} from 'slate'
 import xss from 'xss'
-import {Link} from '../../mui'
+import {TextLink} from '../../tw'
 import {cn} from '../../_classnames'
+import {elementClasses, leafClasses} from '../classes'
 
 type ElementKey =
   | 'paragraph'
@@ -29,23 +30,23 @@ function serialize(
     let textNode: React.ReactNode = <>{cleanContent}</>
 
     if (node.bold) {
-      textNode = <strong className="font-semibold">{textNode}</strong>
+      textNode = <strong className={leafClasses.bold}>{textNode}</strong>
     }
     if (node.code) {
       textNode = (
-        <code className="font-mono bg-black/5 rounded px-1 py-0.5 text-[0.9em]">
+        <code className={leafClasses.code}>
           {textNode}
         </code>
       )
     }
     if (node.italic) {
-      textNode = <em className="italic">{textNode}</em>
+      textNode = <em className={leafClasses.italic}>{textNode}</em>
     }
     if (node.underline) {
-      textNode = <u>{textNode}</u>
+      textNode = <u className={leafClasses.underline}>{textNode}</u>
     }
     if (node.strikethrough) {
-      textNode = <s>{textNode}</s>
+      textNode = <s className={leafClasses.strikethrough}>{textNode}</s>
     }
 
     return textNode
@@ -70,50 +71,50 @@ function serialize(
     case 'block-quote':
       return (
         <blockquote
-          className={cn('border-l-4 border-border pl-4 italic my-2', classNames.blockquote)}
+          className={cn(elementClasses['block-quote'], classNames.blockquote)}
         >
           {children}
         </blockquote>
       )
     case 'bulleted-list':
       return (
-        <ul className={cn('list-disc pl-6 my-2', classNames['bulleted-list'])}>
+        <ul className={cn(elementClasses['bulleted-list'], classNames['bulleted-list'])}>
           {children}
         </ul>
       )
     case 'heading-one':
       return (
-        <h1 className={cn('font-heading text-4xl font-bold', classNames['heading-one'])}>
+        <h1 className={cn(elementClasses['heading-one'], classNames['heading-one'])}>
           {children}
         </h1>
       )
     case 'heading-two':
       return (
-        <h2 className={cn('font-heading text-3xl font-bold', classNames['heading-two'])}>
+        <h2 className={cn(elementClasses['heading-two'], classNames['heading-two'])}>
           {children}
         </h2>
       )
     case 'heading-three':
       return (
-        <h3 className={cn('font-heading text-2xl font-semibold', classNames['heading-three'])}>
+        <h3 className={cn(elementClasses['heading-three'], classNames['heading-three'])}>
           {children}
         </h3>
       )
     case 'heading-four':
       return (
-        <h4 className={cn('font-heading text-xl font-semibold', classNames['heading-four'])}>
+        <h4 className={cn(elementClasses['heading-four'], classNames['heading-four'])}>
           {children}
         </h4>
       )
     case 'heading-five':
       return (
-        <h5 className={cn('font-heading text-lg font-semibold', classNames['heading-five'])}>
+        <h5 className={cn(elementClasses['heading-five'], classNames['heading-five'])}>
           {children}
         </h5>
       )
     case 'heading-six':
       return (
-        <h6 className={cn('font-heading text-base font-semibold', classNames['heading-six'])}>
+        <h6 className={cn(elementClasses['heading-six'], classNames['heading-six'])}>
           {children}
         </h6>
       )
@@ -121,23 +122,24 @@ function serialize(
       return <li className={cn(classNames['list-item'])}>{children}</li>
     case 'numbered-list':
       return (
-        <ol className={cn('list-decimal pl-6 my-2', classNames['numbered-list'])}>
+        <ol className={cn(elementClasses['numbered-list'], classNames['numbered-list'])}>
           {children}
         </ol>
       )
     case 'paragraph':
       return (
-        <p className={cn('my-2', classNames.paragraph)}>{children}</p>
+        <p className={cn(elementClasses.paragraph, classNames.paragraph)}>{children}</p>
       )
     case 'link': {
       const sanitizedUrl = xss(node.url ?? '')
       return (
-        <Link
+        <TextLink
           href={sanitizedUrl}
-          className={cn('text-primary hover:underline', classNames.link)}
+          underline="hover"
+          className={cn(elementClasses.link, classNames.link)}
         >
           {children}
-        </Link>
+        </TextLink>
       )
     }
     default:

@@ -39,7 +39,7 @@ declaration for a tier that is very much in use.
 | `ui`               | shadcn-based components. See note below.                      |
 | `legal`            | Agency legal pages, shared verbatim. Renders with `tw`.       |
 | `mui`, `mui-pages` | MUI components. App Router and Pages Router variants.         |
-| `slate`            | Slate rich-text editor. Pulls MUI in via its toolbar.         |
+| `slate`            | Slate rich-text plumbing and renderers. No UI library.        |
 | `aws`              | S3 helpers. Reads AWS credentials from env — server-side use. |
 | `blob`             | Vercel Blob helpers — server-side use.                        |
 | `types`            | Ambient declarations.                                         |
@@ -79,8 +79,8 @@ Consuming apps also have their own `cn`, installed by shadcn at
 `src/lib/utils.ts`. **Both exist on purpose and neither should import the other.**
 
 - Shared components can't use the app's copy. It would make every tier that merges
-  classes shadcn-only — breaking `tw` for plain-Tailwind apps and `slate` for MUI
-  apps — and that file is generated, rewritten by `shadcn add -o`.
+  classes shadcn-only — breaking `tw` and `slate` for plain-Tailwind apps — and
+  that file is generated, rewritten by `shadcn add -o`.
 - The app's copy can't be replaced by this one without taking ownership of a file
   the shadcn CLI expects to manage.
 

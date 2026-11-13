@@ -112,15 +112,13 @@
       "shadcn": []
     },
     "slate": {
-      "description": "Slate rich-text editor. Pulls MUI in via its toolbar.",
+      "description": "Slate rich-text plumbing and renderers: plain semantic HTML with Tailwind classes. Editor chrome (toolbar, placeholder) is app-owned.",
       "requires": [
         "_classnames",
-        "mui",
+        "tw",
         "types"
       ],
       "deps": [
-        "@mui/icons-material",
-        "@mui/material",
         "slate",
         "slate-react",
         "use-debounce",

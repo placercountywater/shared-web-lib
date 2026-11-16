@@ -12,14 +12,18 @@ export const ALERT_ICONS = [
   {name: 'alert-triangle', label: 'Warning'},
   {name: 'alert-circle', label: 'Alert'},
   {name: 'alert-octagon', label: 'Important'},
+  {name: 'shield-exclamation', label: 'Fraud or scam'},
   {name: 'info-circle', label: 'Information'},
   {name: 'bell-exclamation', label: 'Notice'},
+  {name: 'speakerphone', label: 'Announcement'},
   {name: 'help-circle', label: 'Help'},
   {name: 'droplet', label: 'Water'},
   {name: 'droplet-off', label: 'Water outage'},
   {name: 'tool', label: 'Maintenance'},
   {name: 'barrier-block', label: 'Construction'},
+  {name: 'truck', label: 'Crews working'},
   {name: 'building-community', label: 'Office or facility'},
+  {name: 'door-off', label: 'Office closed'},
   {name: 'phone-off', label: 'Phones down'},
   {name: 'credit-card', label: 'Payments'},
   {name: 'receipt-dollar', label: 'Billing'},
@@ -29,9 +33,14 @@ export const ALERT_ICONS = [
   {name: 'map-pin', label: 'Location'},
   {name: 'flame', label: 'Fire'},
   {name: 'cloud-storm', label: 'Storm'},
+  {name: 'snowflake', label: 'Freeze'},
+  {name: 'temperature-sun', label: 'Heat'},
   {name: 'bolt', label: 'Power'},
   {name: 'wifi-off', label: 'Online services down'},
-  {name: 'mail', label: 'Mail'}
+  {name: 'world-www', label: 'Website'},
+  {name: 'mail', label: 'Mail'},
+  {name: 'mail-off', label: 'Email down'},
+  {name: 'file-text', label: 'Notice or document'}
 ] as const
 
 export type AlertIconName = (typeof ALERT_ICONS)[number]['name']

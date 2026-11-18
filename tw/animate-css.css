@@ -3,9 +3,13 @@ Animate.css animation presets (https://animate.style) as Tailwind v4 theme
 tokens. CSS port of animate-css.mjs (legacy JS config version) — usable as
 `animate-css-*` utilities. Keyframes live inside @theme so unused ones are
 tree-shaken from the build along with their animation token.
+`inline` so each utility gets the animation value itself: var(--tw-duration)
+then resolves on the element, letting `duration-*` set the length. (A plain
+@theme resolves it once on :root, where no duration is set, so the default
+always won.)
 */
 
-@theme {
+@theme inline {
   --animate-css-tada: css-tada
     var(--tw-animation-duration, var(--tw-duration, 1s)) var(--tw-ease, ease)
     var(--tw-animation-delay, 0s) none;

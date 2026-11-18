@@ -3,9 +3,13 @@ PCWA custom animation presets as Tailwind v4 theme tokens. CSS port of
 pcwa.mjs (legacy JS config version) — usable as `animate-pcwa-*` utilities.
 Keyframes live inside @theme so unused ones are tree-shaken from the build
 along with their animation token.
+`inline` so each utility gets the animation value itself: var(--tw-duration)
+then resolves on the element, letting `duration-*` set the length. (A plain
+@theme resolves it once on :root, where no duration is set, so the default
+always won.)
 */
 
-@theme {
+@theme inline {
   --animate-pcwa-fade-in-from-top: pcwa-fade-in-from-top
     var(--tw-animation-duration, var(--tw-duration, 0.8s)) var(--tw-ease, ease)
     var(--tw-animation-delay, 0s) forwards;
